@@ -4,9 +4,11 @@ import sys, time
 class Characters:
     def __init__(self):
         self.names = ['', '', '', '', '']
-        self.health = ['good', 'good', 'good', 'good', 'good'] #great, good, fair, poor
+        self.health = [70, 70, 70, 70, 70] #great, good, fair, poor
         self.alive = [True, True, True, True, True]
         self.conditions = ['None', 'None', 'None', 'None']
+        self.pace = 'steady'
+        self.rations = 'filling'
 
     def __list__(self):
         return(str(self.names))
@@ -27,7 +29,16 @@ class Characters:
         self.names[0] = input('\nWhat is the name of the wagon leader? ')
 
 
-
+class Supplies():
+    def __init__(self):
+        self.oxen = 0
+        self.clothing = 0
+        self.bullets = 0
+        self.wheels = 0
+        self.axles = 0
+        self.tongues = 0
+        self.food = 0
+        self.money = 0
 
 
 
@@ -95,7 +106,7 @@ def MonthSelection():
 
 
 
-def FirstShop(difficulty, month):
+def FirstShop(difficulty, month, supplies):
     match difficulty:
         case '1': balance = 1600.0
         case '2': balance = 800.0
@@ -128,6 +139,7 @@ def FirstShop(difficulty, month):
                     elif float(yokeAmount) > 9 or float(yokeAmount) < 1: yokeAmount = input(InvalidOption)
                     else: break
                 oxenCost = float(yokeAmount) * 40
+                supplies.oxen = int(yokeAmount) * 2
 
             case '2':
                 foodAmount = input(Fore.CYAN + f'\nBitmoji Store\nIndependence, Missouri' + Fore.RESET + f'\nBill so far: ${totalCost}0\nI recommend you take at least 200 pounds of food for each person in your family. \nI see that you have 5 people in all. You\'ll need flour, sugar, bacon, and coffee. \nMy price is 20 cent a pound.\nHow many pounds of food do you want? (2000 max) ')
@@ -136,6 +148,7 @@ def FirstShop(difficulty, month):
                     elif float(foodAmount) > 2000 or float(foodAmount) < 0: foodAmount = input(InvalidOption)
                     else: break
                 foodCost = float(foodAmount) * 0.2
+                supplies.food = int(foodAmount)
 
             case '3':
                 clothingAmount = input(Fore.CYAN + f'\nBitmoji Store\nIndependence, Missouri' + Fore.RESET + f'\nBill so far: ${totalCost}0\nYou\'ll need warm clothing in the mountains. \nI recommend taking at least 2 sets of clothes per person. \nEach set is $10.00. \nHow many sets of clothes do you want? (160 max) ')
@@ -144,6 +157,7 @@ def FirstShop(difficulty, month):
                     elif float(clothingAmount) > 160 or float(clothingAmount) < 0: clothingAmount = input(InvalidOption)
                     else: break
                 clothingCost = float(clothingAmount) * 10
+                supplies.clothing = int(clothingAmount)
 
             case '4':
                 ammoAmount = input(Fore.CYAN + f'\nBitmoji Store\nIndependence, Missouri' + Fore.RESET + f'\nBill so far: ${totalCost}0\nI sell ammunition in boxes of 20 bullets.\nEach box cost $2.00\nHow many boxes do you want? (800 max) ')
@@ -152,6 +166,7 @@ def FirstShop(difficulty, month):
                     elif float(ammoAmount) > 800 or float(ammoAmount) < 0: ammoAmount = input(InvalidOption)
                     else: break
                 ammoCost = float(ammoAmount) * 2
+                supplies.bullets = int(ammoAmount) * 20
 
             case '5':
                 print(Fore.CYAN + f'\nBitmoji Store\nIndependence, Missouri' + Fore.RESET + f'\nBill so far: ${totalCost}0\nIt\'s a good idea to have a few spare aprts for your wagon\nHere are the prices:\nwagon wheel - $10 each\nwagon axle - $10 each\nwagon tongue - $10 each\n')
@@ -163,10 +178,70 @@ def FirstShop(difficulty, month):
                 while tongueAmount.isdigit() == False: tongueAmount = input(InvalidOption)
             
                 partsCost = (float(wheelAmount) + float(axleAmount) + float(tongueAmount)) * 10
-            case _: pass
+                supplies.wheels, supplies.axles, supplies.tongues = int(wheelAmount), int(axleAmount), int(tongueAmount)
 
         totalCost = oxenCost + foodCost + clothingCost + ammoCost + partsCost
+        supplies.money = balance - totalCost
     dummyInput = input(Fore.GREEN + '\n[Press Enter to continue]' + Fore.RESET + f'\nWell then, you\'re ready to start. Good Luck! \nYou have a long and difficult journey ahead of you.')
+
+
+
+def CalculateHealth(character):
+    avgHealth = 0
+    for i in range(len(character.health)): avgHealth += character.health[i]
+    avgHealth /= len(character.health)
+    
+    if avgHealth > 75: health = 'great'
+    elif avgHealth > 50: health = 'good'
+    elif avgHealth > 25: health = 'fair'
+    elif avgHealth > 0: health = 'poor'
+
+    return health 
+
+
+def Menu(character, supplies, month):
+    health = CalculateHealth(character)
+    weather = 'cool' #WIP
+
+    while True:
+        print(Fore.MAGENTA + f'\nIndependence\n{month} 1, 1848' + Fore.RESET)
+        print(Fore.YELLOW + f'Weather: {weather}\nHealth: {health}\nPace: {character.pace}\nRations: {character.rations}' + Fore.RESET)
+        option = input('1.) Continue on the trail\n2.) Check supplies\n3.) Change pace\n4.) Change food rations\n5.) Stop to rest\n6.) Attempt to trade\n7.) Hunt for food\nWhat is your choice? ')
+        while option not in ['1', '2', '3', '4', '5', '6', '7']: option = input(InvalidOption)
+        match option:
+            case '1': break
+            case '2': 
+                dummyInput = input(Fore.YELLOW + '\nYour Supplies:' + Fore.RESET + f'\noxen: {supplies.oxen}\nsets of clothing: {supplies.clothing}\nbullets: {supplies.bullets}\nwagon wheels: {supplies.wheels}\nwagon axles: {supplies.axles}\nwagon tongues: {supplies.tongues}\npounds of food: {supplies.food}\nmoney left: ${supplies.money}0\n\n' + Fore.GREEN + '[Press Enter to continue]' + Fore.RESET)
+            case '3':
+                while True:
+                    paceOption = input(f'\nChange pace (currently "{character.pace}")\nThe pace at which you travel can change. Your choices are: \n1.) a steady pace\n2.) a strenuous pace\n3.) a grueling pace\n4.) find out what these different paces mean\nWhat is your choice? ')
+                    if paceOption == '4': 
+                        print('option 4')
+                        continue #wip
+                    while paceOption not in ['1', '2', '3']: paceOption = input(InvalidOption)
+                    break
+
+                if paceOption == '1': character.pace = 'steady'
+                elif paceOption == '2': character.pace = 'strenuous'
+                elif paceOption == '3': character.pace = 'grueling'
+
+            case '4':
+                rationOption = input(f'\nChange food rations (currently "{character.rations}")\The amount of food the people in your party eat each day can change. These amounts are: \n1.) filling - meals are large and generous.\n2.) meager - meals are small but adequate.\n3.) bare bones - meals are very small; everyone stays hungry.\nWhat is your choice? ')
+                while rationOption not in ['1', '2', '3']: rationOption = input(InvalidOption)
+
+                if rationOption == '1': character.rations = 'filling'
+                elif rationOption == '2': character.rations = 'meager'
+                elif rationOption == '3': character.rations = 'bare bones'
+
+            case '5':
+                rest = input('\nHow many days would you like to rest? ')
+                #WIP
+
+            case '6':
+                pass #WIP
+
+            case '7':
+                pass #WIP
 
 
 
@@ -174,14 +249,16 @@ def main():
     global InvalidOption
     InvalidOption = 'Please selection a available option: '
     character = Characters()
+    supplies = Supplies()
 
     MainMenu()
     difficulty = SelectDifficulty()
     SelectCharacterNames(character)
     month = MonthSelection()
-    FirstShop(difficulty, month)
-    
-    print('Congrats on finishing LT-Trails v0.1')
+    FirstShop(difficulty, month, supplies)
+
+    while True:
+        Menu(character, supplies, month)
     
 
 
