@@ -8,7 +8,7 @@ class Characters:
         self.alive = [True, True, True, True, True]
         self.conditions = ['None', 'None', 'None', 'None']
         self.pace = 'steady'
-        self.rations = 'filling'
+        self.readingRate = 'entertaining'
 
     def __list__(self):
         return(str(self.names))
@@ -33,33 +33,34 @@ class Supplies():
     def __init__(self):
         self.oxen = 0
         self.clothing = 0
-        self.bullets = 0
+        self.tokens = 0
         self.wheels = 0
         self.axles = 0
         self.tongues = 0
-        self.food = 0
+        self.knowledge = 0
         self.money = 0
 
 
 
 def MainMenu():
     while True:
-        menuOption = input(Fore.YELLOW + '\nWelcome to Lit Term Trail!\n' + Fore.RESET + 'You may:\n1.) Travel the Trail \n2.) Learn about the trail \n3.) Choose management options \n4.) End \nWhat is your choice? ')
+        menuOption = input(Fore.YELLOW + '\nWelcome to Lit Term Trail!\n' + Fore.RESET + 'You may:\n1.) Travel the trail \n2.) Learn about the trail \n3.) Choose management options \n4.) End \nWhat is your choice? ')
 
         match menuOption:
             case '1': 
                 break
-            case '2': #WIP
-                dummyInput = input(Fore.GREEN + '\n[Press Enter to continue]' + Fore.RESET + '\nTry taking a journey by covered wagon acress 2000 miles of plains, rivers, and mountins. \nTry! On the plains, will you slosh your oxen through mud and water-filled ruts \nor will you plod through dust 6 sixes deep?')
-                dummyInput = input('How will you cross the rivers? If you have money you might take a ferry (if there is a ferry). \nOr, you can ford the river and hope you and your wagon arn\'t swallowed alive!')
-                dummyInput = input('What about the supplies? Well, if you\'re low on food you can hunt. And there are bears in the mountains.')
-                dummyInput = input('At the Dalles, you can try navigating the Columbian River, \nbut if running the rapids with makeshift raft makes you queasy, better take the Barlow Road.')
-                dummyInput = input('If for some reason you don\'t survive \n-- your wagon burns, or thieves steals your oxen, or you run out of provisions, or you die of cholera -- \ndon\'t give up! Try again... and again... \nuntil your name is up with the others in history.')
+            case '2':
+                print('test')
+                dummyInput = input(Fore.GREEN + '\n[Press Enter to continue]' + Fore.RESET + '\nTry taking a journey by covered wagon across' + Fore.CYAN + ' 2000 ' + Fore.RESET + 'miles of plains, rivers, and mountins. \nTry! On the plains, will you slosh your oxen through mud and water-filled ruts\nor will you plod through dust' + Fore.CYAN + ' 6 ' + Fore.RESET + 'inches deep?')
+                dummyInput = input(Fore.BLUE + 'How will you cross the rivers? ' + Fore.RESET + 'If you have' + Fore.YELLOW + ' money ' + Fore.RESET + 'you might take a ferry (if there is a ferry). \nOr, you can ford the river and hope you and your wagon arn\'t swallowed alive!')
+                dummyInput = input(Fore.BLUE + 'What about the supplies? ' + Fore.RESET + 'Well, if you\'re low on ' + Fore.YELLOW + 'knowledge' + Fore.RESET + ' you can spend tokens.')
+                dummyInput = input('At the Dalles, you can try navigating the ' + Fore.RED + 'Columbian River' + Fore.RESET + ', \nbut if running the rapids with makeshift raft makes you queasy, better pay for the ' + Fore.RED + 'Barlow Road' + Fore.RESET + '.')
+                dummyInput = input('If for some reason you don\'t survive \n' + Fore.RED + '-- your wagon burns, or thieves steals your oxen, or you run out of provisions, or you die of cholera --' + Fore.RESET + ' \ndon\'t give up! Try again... and again... \nuntil your name is up with the others in history.')
             case '3': 
-                managementOptions = input(Fore.YELLOW + 'Management Options!\n' + Fore.RESET + 'You may:\n1.) Leave \nWhat is your choice? ')
+                managementOptions = input(Fore.YELLOW + '\nManagement Options!\n' + Fore.RESET + 'You may:\n1.) Leave \nWhat is your choice? ')
                 while managementOptions not in ['1']: managementOptions = input(InvalidOption)
                 match managementOptions:
-                    case '1': break
+                    case '1': pass
             case '4': sys.exit(Fore.RED + 'Game Stopped' + Fore.RESET)
 
 
@@ -94,8 +95,8 @@ def MonthSelection():
     month = ''
     while month not in ['1', '2', '3', '4', '5']: 
         month = input(Fore.YELLOW + '\nMonth Selection' + Fore.RESET + '\nIt is 1848. Your jumping off place for Oregon is Independence Missouri. You must decide which month to leave Independence.\n1.) March \n2.) April \n3.) May \n4.) June \n5.) July \n6.) Ask for advice\nWhat is your choice? ')
-        if month == '6': #WIP
-            dummyInput = input(Fore.GREEN + '\n[Press Enter to continue]' + Fore.RESET + 'You attend for public meeting for "folks with the California - Oregon fever" You\'re told:\n\nIf you leave too early, there won\'t be any grass for your oxen to eat. If you leave too late, you may not get to Oregon ebfore winter comes. If you leave at just the right time, there will be green grass and the weather will still be cool.')
+        if month == '6':
+            dummyInput = input(Fore.GREEN + '\n[Press Enter to continue]' + Fore.RESET + 'You attend for public meeting for "folks with the California - Oregon fever" You\'re told:\n\nIf you leave too early, there won\'t be any grass for your oxen to eat. If you leave too late, you may not get to Oregon before winter comes. If you leave at just the right time, there will be green grass and the weather will still be cool.')
     match month:
         case '1': month = 'March'
         case '2': month = 'April'
@@ -111,16 +112,16 @@ def FirstShop(difficulty, month, supplies):
         case '1': balance = 1600.0
         case '2': balance = 800.0
         case '3': balance = 400.0
-    yokeAmount, oxenCost, foodCost, clothingCost, ammoCost, partsCost, totalCost = 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+    yokeAmount, oxenCost, knowledgeCost, clothingCost, tokenCost, partsCost, totalCost = 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
 
     dummyInput = input(Fore.GREEN + '\n[Press Enter to continue]' + Fore.RESET + f'\nBefore leaving Independence you should buy equipment and supplies. \nYou have ${balance} in cash, but you don\'t have to spend it all now.')
     dummyInput = input('You can buy whatever you need at the Bitmoji Store')
     dummyInput = input('\nHello, I\'m LT. So you\'re going to Oregon! \nI can fix you up with what you need: \n\n- a team of oxen to pull your wagon\n- clothing for both summer and winter')
-    dummyInput = input('- plenty of food for the trip\n- ammunition for your rifles\n- spare parts for your wagon') #WIP
+    dummyInput = input('- plenty of knowledge for the trip\n- tokens for pop quizzes\n- spare parts for your wagon')
 
 
     while True:
-        shopOption = input(Fore.YELLOW + f'\nBitmoji Store\nIndependence, Missouri\n{month} 1, 1848' + Fore.RESET + f'\n0.) Leave Store\n1.) Oxen: ${oxenCost}0 \n2.) Food: ${foodCost}0 \n3.) Clothing ${clothingCost}0 \n4.) Ammunition: ${ammoCost}0 \n5.) Spare Parts: ${partsCost}0\n=============================\nTotal Bill: ${totalCost}0\n\nAmount you have: ${balance}0\nWhich item would you like to buy? ')
+        shopOption = input(Fore.YELLOW + f'\nBitmoji Store\nIndependence, Missouri\n{month} 1, 1848' + Fore.RESET + f'\n0.) Leave Store\n1.) Oxen: ${oxenCost}0 \n2.) Knowledge: ${knowledgeCost}0 \n3.) Clothing ${clothingCost}0 \n4.) Tokens: ${tokenCost}0 \n5.) Spare Parts: ${partsCost}0\n=============================\nTotal Bill: ${totalCost}0\n\nAmount you have: ${balance}0\nWhich item would you like to buy? ')
 
         match shopOption:
             case '0':
@@ -133,7 +134,7 @@ def FirstShop(difficulty, month, supplies):
                 else: break
 
             case '1':
-                yokeAmount = input(Fore.CYAN + f'\nBitmoji Store\nIndependence, Missouri' + Fore.RESET + f'\nBill so far: ${totalCost}0\nThere are 2 oxen in a yoke;\nI recommend at least 3 yoke.\nI charge $40 a yoke.\nHow many yoke do you want? (1 min, 9 max) ')
+                yokeAmount = input(Fore.CYAN + f'\nBitmoji Store\nIndependence, Missouri' + Fore.YELLOW + f'\nBill so far: ${totalCost}0' + Fore.RESET + '\nThere are 2 oxen in a yoke;\nI recommend at least 3 yoke.\nI charge $40 a yoke.\nHow many yoke do you want? (1 min, 9 max) ')
                 while True:
                     if yokeAmount.isdigit() == False: yokeAmount = input(InvalidOption)
                     elif float(yokeAmount) > 9 or float(yokeAmount) < 1: yokeAmount = input(InvalidOption)
@@ -142,16 +143,16 @@ def FirstShop(difficulty, month, supplies):
                 supplies.oxen = int(yokeAmount) * 2
 
             case '2':
-                foodAmount = input(Fore.CYAN + f'\nBitmoji Store\nIndependence, Missouri' + Fore.RESET + f'\nBill so far: ${totalCost}0\nI recommend you take at least 200 pounds of food for each person in your family. \nI see that you have 5 people in all. You\'ll need flour, sugar, bacon, and coffee. \nMy price is 20 cent a pound.\nHow many pounds of food do you want? (2000 max) ')
+                knowledgeAmount = input(Fore.CYAN + f'\nBitmoji Store\nIndependence, Missouri' + Fore.YELLOW + f'\nBill so far: ${totalCost}0' + Fore.RESET + '\nI recommend you take at least 200 points of knowledge for each person in your family. \nI see that you have 5 people in all. You\'ll need pens, ink, paper, and books. \nMy price is 20 cent per knowledge.\nHow many points of knowledge do you want? (2000 max) ')
                 while True:
-                    if foodAmount.isdigit() == False: foodAmount = input(InvalidOption)
-                    elif float(foodAmount) > 2000 or float(foodAmount) < 0: foodAmount = input(InvalidOption)
+                    if knowledgeAmount.isdigit() == False: knowledgeAmount = input(InvalidOption)
+                    elif float(knowledgeAmount) > 2000 or float(knowledgeAmount) < 0: knowledgeAmount = input(InvalidOption)
                     else: break
-                foodCost = float(foodAmount) * 0.2
-                supplies.food = int(foodAmount)
+                knowledgeCost = float(knowledgeAmount) * 0.2
+                supplies.knowledge = int(knowledgeAmount)
 
             case '3':
-                clothingAmount = input(Fore.CYAN + f'\nBitmoji Store\nIndependence, Missouri' + Fore.RESET + f'\nBill so far: ${totalCost}0\nYou\'ll need warm clothing in the mountains. \nI recommend taking at least 2 sets of clothes per person. \nEach set is $10.00. \nHow many sets of clothes do you want? (160 max) ')
+                clothingAmount = input(Fore.CYAN + f'\nBitmoji Store\nIndependence, Missouri' + Fore.YELLOW + f'\nBill so far: ${totalCost}0' + Fore.RESET + 'nYou\'ll need warm clothing in the mountains. \nI recommend taking at least 2 sets of clothes per person. \nEach set is $10.00. \nHow many sets of clothes do you want? (160 max) ')
                 while True:
                     if clothingAmount.isdigit() == False: clothingAmount = input(InvalidOption)
                     elif float(clothingAmount) > 160 or float(clothingAmount) < 0: clothingAmount = input(InvalidOption)
@@ -160,16 +161,16 @@ def FirstShop(difficulty, month, supplies):
                 supplies.clothing = int(clothingAmount)
 
             case '4':
-                ammoAmount = input(Fore.CYAN + f'\nBitmoji Store\nIndependence, Missouri' + Fore.RESET + f'\nBill so far: ${totalCost}0\nI sell ammunition in boxes of 20 bullets.\nEach box cost $2.00\nHow many boxes do you want? (800 max) ')
+                tokenAmount = input(Fore.CYAN + f'\nBitmoji Store\nIndependence, Missouri' + Fore.YELLOW + f'\nBill so far: ${totalCost}0' + Fore.RESET + 'I sell tokens in stacks of 20.\nEach stack cost $2.00\nHow many stacks do you want? (800 max) ')
                 while True:
-                    if ammoAmount.isdigit() == False: ammoAmount = input(InvalidOption)
-                    elif float(ammoAmount) > 800 or float(ammoAmount) < 0: ammoAmount = input(InvalidOption)
+                    if tokenAmount.isdigit() == False: tokenAmount = input(InvalidOption)
+                    elif float(tokenAmount) > 800 or float(tokenAmount) < 0: tokenAmount = input(InvalidOption)
                     else: break
-                ammoCost = float(ammoAmount) * 2
-                supplies.bullets = int(ammoAmount) * 20
+                tokenCost = float(tokenAmount) * 2
+                supplies.tokens = int(tokenAmount) * 20
 
             case '5':
-                print(Fore.CYAN + f'\nBitmoji Store\nIndependence, Missouri' + Fore.RESET + f'\nBill so far: ${totalCost}0\nIt\'s a good idea to have a few spare aprts for your wagon\nHere are the prices:\nwagon wheel - $10 each\nwagon axle - $10 each\nwagon tongue - $10 each\n')
+                print(Fore.CYAN + f'\nBitmoji Store\nIndependence, Missouri' + Fore.YELLOW + f'\nBill so far: ${totalCost}0' + Fore.RESET + '\nIt\'s a good idea to have a few spare parts for your wagon\nHere are the prices:\nwagon wheel - $10 each\nwagon axle - $10 each\nwagon tongue - $10 each\n')
                 wheelAmount = input('How many wagon wheels? ')
                 while wheelAmount.isdigit() == False: wheelAmount = input(InvalidOption)
                 axleAmount = input('How many wagon axles? ')
@@ -180,7 +181,7 @@ def FirstShop(difficulty, month, supplies):
                 partsCost = (float(wheelAmount) + float(axleAmount) + float(tongueAmount)) * 10
                 supplies.wheels, supplies.axles, supplies.tongues = int(wheelAmount), int(axleAmount), int(tongueAmount)
 
-        totalCost = oxenCost + foodCost + clothingCost + ammoCost + partsCost
+        totalCost = oxenCost + knowledgeCost + clothingCost + tokenCost + partsCost
         supplies.money = balance - totalCost
     dummyInput = input(Fore.GREEN + '\n[Press Enter to continue]' + Fore.RESET + f'\nWell then, you\'re ready to start. Good Luck! \nYou have a long and difficult journey ahead of you.')
 
@@ -205,13 +206,13 @@ def Menu(character, supplies, month):
 
     while True:
         print(Fore.MAGENTA + f'\nIndependence\n{month} 1, 1848' + Fore.RESET)
-        print(Fore.YELLOW + f'Weather: {weather}\nHealth: {health}\nPace: {character.pace}\nRations: {character.rations}' + Fore.RESET)
-        option = input('1.) Continue on the trail\n2.) Check supplies\n3.) Change pace\n4.) Change food rations\n5.) Stop to rest\n6.) Attempt to trade\n7.) Hunt for food\nWhat is your choice? ')
+        print(Fore.YELLOW + f'Weather: {weather}\nHealth: {health}\nPace: {character.pace}\nReading Rate: {character.readingRate}' + Fore.RESET)
+        option = input('1.) Continue on the trail\n2.) Check supplies\n3.) Change pace\n4.) Change reading rate\n5.) Stop to rest\n6.) Attempt to trade\n7.) Read for knowledge\nWhat is your choice? ')
         while option not in ['1', '2', '3', '4', '5', '6', '7']: option = input(InvalidOption)
         match option:
             case '1': break
             case '2': 
-                dummyInput = input(Fore.YELLOW + '\nYour Supplies:' + Fore.RESET + f'\noxen: {supplies.oxen}\nsets of clothing: {supplies.clothing}\nbullets: {supplies.bullets}\nwagon wheels: {supplies.wheels}\nwagon axles: {supplies.axles}\nwagon tongues: {supplies.tongues}\npounds of food: {supplies.food}\nmoney left: ${supplies.money}0\n\n' + Fore.GREEN + '[Press Enter to continue]' + Fore.RESET)
+                dummyInput = input(Fore.YELLOW + '\nYour Supplies:' + Fore.RESET + f'\noxen: {supplies.oxen}\nsets of clothing: {supplies.clothing}\ntokens: {supplies.tokens}\nwagon wheels: {supplies.wheels}\nwagon axles: {supplies.axles}\nwagon tongues: {supplies.tongues}\npoints of knowledge: {supplies.knowledge}\nmoney left: ${supplies.money}0\n\n' + Fore.GREEN + '[Press Enter to continue]' + Fore.RESET)
             case '3':
                 while True:
                     paceOption = input(f'\nChange pace (currently "{character.pace}")\nThe pace at which you travel can change. Your choices are: \n1.) a steady pace\n2.) a strenuous pace\n3.) a grueling pace\n4.) find out what these different paces mean\nWhat is your choice? ')
@@ -226,12 +227,12 @@ def Menu(character, supplies, month):
                 elif paceOption == '3': character.pace = 'grueling'
 
             case '4':
-                rationOption = input(f'\nChange food rations (currently "{character.rations}")\The amount of food the people in your party eat each day can change. These amounts are: \n1.) filling - meals are large and generous.\n2.) meager - meals are small but adequate.\n3.) bare bones - meals are very small; everyone stays hungry.\nWhat is your choice? ')
-                while rationOption not in ['1', '2', '3']: rationOption = input(InvalidOption)
+                readingRateOptions = input(f'\nChange reading rate (currently "{character.readingRate}")\The amount of knowledge the people in your party consume each day can change. These amounts are: \n1.) entertaining - reads many hours a day.\n2.) enjoyable - party reads a small but satisfactory amount.\n3.) disappointing - very few pages read; everyone stays craving for more.\nWhat is your choice? ')
+                while readingRateOptions not in ['1', '2', '3']: readingRateOptions = input(InvalidOption)
 
-                if rationOption == '1': character.rations = 'filling'
-                elif rationOption == '2': character.rations = 'meager'
-                elif rationOption == '3': character.rations = 'bare bones'
+                if readingRateOptions == '1': character.readingRate = 'entertaining'
+                elif readingRateOptions == '2': character.readingRate = 'satisfactory'
+                elif readingRateOptions == '3': character.readingRate = 'disappointing'
 
             case '5':
                 rest = input('\nHow many days would you like to rest? ')
