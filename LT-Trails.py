@@ -1,5 +1,13 @@
+import sys, time, random, importlib
+
+try:
+    importlib.import_module('colorama')
+    print("All libraries installed properly")
+except ImportError:
+    sys.exit("Missing library 'Colorama', Enter 'pip install colorama' in terminal then run this file again.")
+
 from colorama import Fore
-import sys, time, random
+
 
 class Characters:
     def __init__(self):
@@ -75,6 +83,70 @@ class Date():
 
 
 
+def VocabList(l:list = [1, 2, 3]):
+    ls1 = {
+        0: ["Divulge", "v", "to tell; to reveal (as a secret)", "The reporter was fired when she divulged information from a classified document."],
+        1: ["Abet", "v", "to assist or encourage, especially in wrongdoing", "Jim refused to abet the criminal's escape by hiding him in the basement."],
+        2: ["Ardor", "n", "an intense feeling of devotion or eagerness", "The defending troops fought with ardor ebcause the emeny would not be taking any prisoners."],
+        3: ["Dogmatic", "adj", "arrogant and stubborn about one's beliefs", "Beause of the professer's dogmatic approach, the students were afraid to ask questions."],
+        4: ["Insipid", "adj", "lacking favor; dull; not at all simulating", "My mom wanted me to be an accountant, but I found the classes boring and insipid."],
+        5: ["Proclivity", "n", "a natural leaning or tendency", "Abigail's procivility for history led her to write a book on the founders of her home town."],
+        6: ["Extraneous", "adj", "not essentail; not constituing a vital part", "The professor felt that the extraneous paragraph in the essay detracted from the more important infomation."],
+        7: ["Coerce", "v", "to force by using presssure, intimadation, or threats", "Jerry preferred basketball', but ihs father coerced him into palying football."],
+        8: ["Jaundiced", "adj", "prejudice; hostile", "Gabe had jaunduced view of Iraq after losing his wife in the Gulf War."],
+        9: ["Occlude", "v", "to block the passage of", "A large mass of clay occuleded the water pipe, causing a dangerous rise in pressure."],
+        10: ["Meticulous", "adj", "extremely, sometimes excessively, carefule about small details; precise", "With meticulous care, he crafted a miniature dollhouse for his daughter."],
+        11: ["Temerity", "n", "recklessness; a foolish disregurd of danger", "I couldn't believe that Bret had the temerity to bungee jump over a lake full of alligators."],
+        12: ["Rote", "n", "a habitual repetitive routine or procedure", "Kristan memorized the piano sonata through rote, by practiciing the song over and over until she could play it perfectly."],
+        13: ["Ascribe", "v", "to credit as to the cuase or the source", "The carpenter ascribed the rotten floorboards to a leaky roof."],
+        14: ["Gregarious", "adj", "sociable; fond of the company of others", "Just before he was diagnosed with clinical depression, Raji went from being gregarious to being anitsocial."]
+    }
+
+    ls2 = {
+        0: ["Disabuse", "v", "to free someone from believing something false", "Pam felt it was time to disabuse her son of his belief in the tooth fairy."],
+        1: ["Heresy", "n", "the act of holding a belief that goes against established doctrine", "During the inquisition, those found guilty of heresy were sometimes burned at the sake."],
+        2: ["Audit", "v", "to check the accruacy of financial accounts and records", "When sienna is ready to graduate, the university will audit her records to verify that she took all the required classes."],
+        3: ["Motley", "adj", "made up of dissimilar parts; being of many colors", "The international clown convention was a motley sight in the otherwise dull exhibition center."],
+        4: ["Libation", "n", "a drink, especially an alcoholic one", "When we visited the vineyard, we were offered a small libation at the end of our tour."],
+        5: ["Docile", "adj", "easy to teach or manage; obedient", "The poodle, usually doctile, went mad and attacked its owner."],
+        6: ["Restive", "adj", "restless and impatient", "Two restive students sat in chairs outside the principals office waiting to be called inside."],
+        7: ["Banter", "n", "teasing; playful converseration", "At the reunion, ruth enjoyed listening to the banter of her husband and his old college roommate."],
+        8: ["Castigate", "v", "to criticize or punish serverly", "The parson castigated the boy for noisily chewing gum in church."],
+        9: ["Anathema", "n", "a hated, repellant person or thing", "Cannibalism is anathema to almost every society on the planet."],
+        10: ["Gauche", "adj", "lacking social grace; tactless", "Some people use a fork to eat pizza because they think it is gauche to use their fingers."],
+        11: ["Ignominy", "n", "public shame, disgrace, or dishonor", "The mayor fell from public acclaim to complete ignomny in a week when her cocaine habit was discovered."],
+        12: ["Dither", "v", "to hesitate nervously", "When asked if he had completed his homework assignment, luke dithered, knwoing that he had forgotten about it."],
+        13: ["Emaciated", "adj", "extremely thin; wasted away", "Dead from starvation, the emacieted prisoner was buried in the camp cemetery."],
+        14: ["Repine", "v", "to be discontent as though yearning for something; complain", "Nathan repined loudly in his room after getting grounded for picking on his sister."]
+    }
+
+    ls3 = {
+        0: ["Irascible", "adj", "easily angered", "We walk on eggshells around marty because he is so irascible."],
+        1: ["Bacchanalian", "adj", "wild and drunken", "Adam paid for his bacchanalian weekend when he flunked the exam on monday."],
+        2: ["Maudlin", "adj", "foolishly sentimenttal; ridiculously emotional", "The scame artist put forth a maudlin display of outrage when his victims accused him of stealing their money."],
+        3: ["Extradite", "v", "to turn over or deliver to the legal jurisdiction of antoehr government or authority", "After two months of incarceration in sacramento, the suspect was extradited to florida."],
+        4: ["Furitive", "adj", "stealthy; secretive", "Not wanting to be rude, jean cast only a furtive glance at the man's prominent scar."],
+        5: ["Mettle", "n", "courage and determination", "The secret mission behind enemy lines would require soldiers who have mettle because many probably wouldn't be coming back."],
+        6: ["Conflate", "v", "to combine into one", "When henry wrote about cavemen hunting dinosaurs, his teacher explained that he had conflated two ideas."],
+        7: ["Mercenary", "n", "a professional solder hired bu a foreign army", "Thought american by bith, the mercaenary fought for france."],
+        8: ["Bastion", "n", "a strong defense or fort (or something likened to it)", "The united states has been called the bastion of democracy."],
+        9: ["Avarice", "n", "greed; desire for wealth", "He became a doctor, not to save lives, but to appease his avarice."],
+        10: ["Jettison", "v", "to cast overboard; to discard", "The passengers quickly jettisoned the heavy cargo from the damaged plane."],
+        11: ["Solvent", "adj", "able to pay all debts and financial obligations", "The owner of the company must keep the business solvent or else vendors will refuse to be business with him."],
+        12: ["Ostracize", "v", "to banish; to shut from a group or society by common consent", "The strict religious community ostracized eli when he married a woman of another faith."],
+        13: ["Tackle", "n", "the equipment for a specific activity", "At the dive shop, you can rent tackle for today's trip to half moon cove."],
+        14: ["Copious", "adj", "numerousl large in quanity", "It is good to drink a copious amount of water before and after working out."]
+    }
+
+
+    allVocab = [ls1, ls2, ls3]
+    total = []
+    for i in range(len(l)):
+        total.append(allVocab[l[i]-1])
+    return(total)
+    
+
+
 def MainMenu(character):
     while True:
         menuOption = input(Fore.YELLOW + '\nWelcome to Lit Term Trail!\n' + Fore.RESET + 'You may:\n1.) Travel the trail \n2.) Learn about the trail \n3.) Choose management options \n4.) End \nWhat is your choice? ')
@@ -90,12 +162,48 @@ def MainMenu(character):
                 dummyInput = input('At the Dalles, you can try navigating the ' + Fore.RED + 'Columbian River' + Fore.RESET + ', \nbut if running the rapids with makeshift raft makes you queasy, better pay for the ' + Fore.RED + 'Barlow Road' + Fore.RESET + '.')
                 dummyInput = input('If for some reason you don\'t survive \n' + Fore.RED + '-- your wagon burns, or thieves steals your oxen, or you run out of provisions, or you die of cholera --' + Fore.RESET + ' \ndon\'t give up! Try again... and again... \nuntil your name is up with the others in history.')
             case '3': 
-                managementOptions = input(Fore.YELLOW + '\nManagement Options!\n' + Fore.RESET + f'You may:\n1.) Leave \n2.) Toggle Wait Time (currently {Wait})\nWhat is your choice? ')
-                while managementOptions not in ['1', '2']: managementOptions = input(InvalidOption)
-                match managementOptions:
-                    case '1': pass
-                    case '2': ToggleWait()
+                ManagementMenu()
             case '4': sys.exit(Fore.RED + 'Game Stopped' + Fore.RESET)
+
+
+
+def ManagementMenu():
+    managementOptions = input(Fore.YELLOW + '\nManagement Options!\n' + Fore.RESET + f'You may:\n1.) Leave \n2.) Toggle Wait Time (currently {Wait})\n3.) Select Vocab Lists (currently selected: {SelectedLesson})\nWhat is your choice? ')
+    while managementOptions not in ['1', '2', '3']: managementOptions = input(InvalidOption)
+    match managementOptions:
+        case '1': pass
+        case '2': ToggleWait()
+        case '3': SelectVocab()
+
+
+
+def ToggleWait():
+    if Wait == True: Wait = False
+    else: Wait = True
+
+
+
+def SelectVocab():
+    option = ''
+    while option != '0':
+        lessonToggle = []
+        for i in range(len(VocabList())):
+            if i+1 in SelectedLesson: lessonToggle.append('On')
+            else: lessonToggle.append('Off')
+
+        option = input(f'\nWhich lessons would you like to toggle?\n0.) Leave\n1.) Lesson 1 ({lessonToggle[0]})\n2.) Lesson 2 ({lessonToggle[1]})\n3.) Lesson 3 ({lessonToggle[2]})\nYour choice: ')
+        while option not in ['0', '1', '2', '3']: option = input(InvalidOption)
+
+        if option != '0':
+            if int(option) in SelectedLesson:
+                SelectedLesson.remove(int(option))
+                if len(SelectedLesson) == 0:
+                    print(Fore.RED + 'You must have at least 1 lesson selected' + Fore.RESET)
+                    SelectedLesson.append(int(option))
+                    SelectedLesson.sort()
+            else: 
+                SelectedLesson.append(int(option))
+                SelectedLesson.sort()
 
 
 
@@ -144,12 +252,6 @@ def MonthSelection(date):
 def DayTick(date, n=1, update=False):
     date.increaseDay(n, update)
     #WIP, food, conditions, etc tick
-
-
-
-def ToggleWait():
-    if Wait == True: Wait = False
-    else: Wait = True
 
 
 
@@ -288,7 +390,6 @@ def Trade(supplies):
             print(Fore.YELLOW + '\nYour Supplies:' + Fore.RESET + f'\noxen: {supplies.oxen}\nsets of clothing: {supplies.clothing}\ntokens: {supplies.tokens}\nwagon wheels: {supplies.wheels}\nwagon axles: {supplies.axles}\nwagon tongues: {supplies.tongues}\npoints of knowledge: {supplies.knowledge}')
             if Wait == True: time.sleep(1)
 
-
     
 
 def CalculateHealth(character):
@@ -302,6 +403,12 @@ def CalculateHealth(character):
     elif avgHealth > 0: health = 'poor'
 
     return health 
+
+
+
+def Quiz(supplies):
+    pass
+
 
 
 def Menu(character, supplies, date):
@@ -331,7 +438,7 @@ def Menu(character, supplies, date):
                 elif paceOption == '3': character.pace = 'grueling'
 
             case '4':
-                readingRateOptions = input(f'\nChange reading rate (currently "{character.readingRate}")\The amount of knowledge the people in your party consume each day can change. These amounts are: \n1.) entertaining - reads many hours a day.\n2.) enjoyable - party reads a small but satisfactory amount.\n3.) disappointing - very few pages read; everyone stays craving for more.\nWhat is your choice? ')
+                readingRateOptions = input(f'\nChange reading rate (currently "{character.readingRate}")\nThe amount of knowledge the people in your party consume each day can change. These amounts are: \n1.) entertaining - reads many hours a day.\n2.) enjoyable - party reads a small but satisfactory amount.\n3.) disappointing - very few pages read; everyone stays craving for more.\nWhat is your choice? ')
                 while readingRateOptions not in ['1', '2', '3']: readingRateOptions = input(InvalidOption)
 
                 if readingRateOptions == '1': character.readingRate = 'entertaining'
@@ -347,18 +454,24 @@ def Menu(character, supplies, date):
                 DayTick(date)
 
             case '7':
-                pass #WIP
+                Quiz(supplies)
 
 
 
 def main():
     global InvalidOption
     global Wait
+    global SelectedLesson
     InvalidOption = 'Please selection a available option: '
     Wait = True
+    SelectedLesson = [1, 2, 3]
     character = Characters()
     supplies = Supplies()
     date = Date()
+
+
+
+    
 
     MainMenu(character)
     difficulty = SelectDifficulty()
