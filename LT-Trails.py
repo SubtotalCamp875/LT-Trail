@@ -145,7 +145,25 @@ def VocabList(l:list = [1, 2, 3]):
         total.append(allVocab[l[i]-1])
     return(total)
     
+"""
+structure of 'total' vocab list
 
+total =
+[
+    {
+        0: [
+            'Divulge', 
+            'v', 
+            'to tell; to reveal (as a secret)',
+            'The reporter was fired when she divulged information from a classified document.'
+        ],
+        1: [],
+        2: []
+    },
+    {},
+    {}
+]
+"""
 
 def MainMenu(character):
     while True:
@@ -251,7 +269,7 @@ def MonthSelection(date):
 
 def DayTick(date, n=1, update=False):
     date.increaseDay(n, update)
-    #WIP, food, conditions, etc tick
+    #WIP, decrease amt for food, conditions, etc
 
 
 
@@ -291,12 +309,12 @@ def FirstShop(difficulty, date, supplies):
                 supplies.oxen = int(yokeAmount) * 2
 
             case '2':
-                knowledgeAmount = input(Fore.CYAN + f'\nBitmoji Store\nIndependence, Missouri' + Fore.YELLOW + f'\nBill so far: ${totalCost}0' + Fore.RESET + '\nI recommend you take at least 200 points of knowledge for each person in your family. \nI see that you have 5 people in all. You\'ll need pens, ink, paper, and books. \nMy price is 20 cent per knowledge.\nHow many points of knowledge do you want? (2000 max) ')
+                knowledgeAmount = input(Fore.CYAN + f'\nBitmoji Store\nIndependence, Missouri' + Fore.YELLOW + f'\nBill so far: ${totalCost}0' + Fore.RESET + '\nI recommend you take at least 200 points of knowledge for each person in your family. \nI see that you have 5 people in all. You\'ll need pens, ink, paper, and books. \nMy price is 10 cent per knowledge.\nHow many points of knowledge do you want? (2000 max) ')
                 while True:
                     if knowledgeAmount.isdigit() == False: knowledgeAmount = input(InvalidOption)
                     elif float(knowledgeAmount) > 2000 or float(knowledgeAmount) < 0: knowledgeAmount = input(InvalidOption)
                     else: break
-                knowledgeCost = float(knowledgeAmount) * 0.2
+                knowledgeCost = float(knowledgeAmount) * 0.1
                 supplies.knowledge = int(knowledgeAmount)
 
             case '3':
@@ -309,7 +327,7 @@ def FirstShop(difficulty, date, supplies):
                 supplies.clothing = int(clothingAmount)
 
             case '4':
-                tokenAmount = input(Fore.CYAN + f'\nBitmoji Store\nIndependence, Missouri' + Fore.YELLOW + f'\nBill so far: ${totalCost}0' + Fore.RESET + 'I sell tokens in stacks of 20.\nEach stack cost $2.00\nHow many stacks do you want? (800 max) ')
+                tokenAmount = input(Fore.CYAN + f'\nBitmoji Store\nIndependence, Missouri' + Fore.YELLOW + f'\nBill so far: ${totalCost}0' + Fore.RESET + '\nI sell tokens in stacks of 20.\nEach stack cost $2.00\nHow many stacks do you want? (800 max) ')
                 while True:
                     if tokenAmount.isdigit() == False: tokenAmount = input(InvalidOption)
                     elif float(tokenAmount) > 800 or float(tokenAmount) < 0: tokenAmount = input(InvalidOption)
@@ -328,6 +346,16 @@ def FirstShop(difficulty, date, supplies):
             
                 partsCost = (float(wheelAmount) + float(axleAmount) + float(tongueAmount)) * 10
                 supplies.wheels, supplies.axles, supplies.tongues = int(wheelAmount), int(axleAmount), int(tongueAmount)
+
+            case 'cheat':
+                supplies.oxen = 6
+                supplies.clothing = 5
+                supplies.tokens = 1600
+                supplies.wheels = 2
+                supplies.axles = 2
+                supplies.tongues = 2
+                supplies.knowledge = 0
+                supplies.money = 10.0
 
         totalCost = oxenCost + knowledgeCost + clothingCost + tokenCost + partsCost
         supplies.money = balance - totalCost
@@ -406,8 +434,78 @@ def CalculateHealth(character):
 
 
 
+def ChangePace(character):
+    while True:
+        paceOption = input(f'\nChange pace (currently "{character.pace}")\nThe pace at which you travel can change. Your choices are: \n1.) a steady pace\n2.) a strenuous pace\n3.) a grueling pace\n4.) find out what these different paces mean\nWhat is your choice? ')
+        if paceOption == '4': 
+            print('option 4')
+            continue #wip
+        while paceOption not in ['1', '2', '3']: paceOption = input(InvalidOption)
+        break
+
+    if paceOption == '1': character.pace = 'steady'
+    elif paceOption == '2': character.pace = 'strenuous'
+    elif paceOption == '3': character.pace = 'grueling'
+    return(character)
+
+
+
+def ChangeReadingRate(character):
+    readingRateOptions = input(f'\nChange reading rate (currently "{character.readingRate}")\nThe amount of knowledge the people in your party consume each day can change. These amounts are: \n1.) entertaining - reads many hours a day.\n2.) enjoyable - party reads a small but satisfactory amount.\n3.) disappointing - very few pages read; everyone stays craving for more.\nWhat is your choice? ')
+    while readingRateOptions not in ['1', '2', '3']: readingRateOptions = input(InvalidOption)
+    if readingRateOptions == '1': character.readingRate = 'entertaining'
+    elif readingRateOptions == '2': character.readingRate = 'satisfactory'
+    elif readingRateOptions == '3': character.readingRate = 'disappointing'
+    return(character)
+
+
+
+def QuizOptions(supplies):
+    quizOption = input(Fore.YELLOW + '\nQuiz Menu\n' + Fore.RESET + f'0.) Leave.\n1.) Take a quiz (5 token).\n2.) Change list of vocabs.\nYou currently have {supplies.tokens} tokens\nYour option: ')
+    while quizOption not in ['1', '2', '0']: quizOption = input(InvalidOption)
+    match quizOption:
+        case '0': pass
+        case '1': Quiz(supplies)
+        case '2': SelectVocab()
+    return(supplies)
+
+
+
 def Quiz(supplies):
-    pass
+    total = VocabList(SelectedLesson)
+    word1, word2, word3 = [], [], []
+    name = 0
+    partOfSpeech = 1
+    definition = 2
+    example = 3
+    supplies.tokens -= 5
+
+    for i in range(3):
+        listNum = random.randint(0, len(total)-1)
+        dictNum = random.randint(0, len(total[listNum])-1)
+        if i == 0: word1 = total[listNum][dictNum]
+        if i == 1: word2 = total[listNum][dictNum]
+        if i == 2: word3 = total[listNum][dictNum]
+
+    ansNum = random.randint(0, 3)-1
+    vocabOptionList = [word1, word2, word3]
+
+    print(Fore.YELLOW + '\nQuizzes\n' + Fore.RESET + f'You currently have {supplies.tokens} tokens\nSelect the definition to the given word: ' + Fore.CYAN + f'{vocabOptionList[ansNum][name]}' + Fore.RESET + f'\n\n1.) {word1[partOfSpeech]}, {word1[definition]}\n2.) {word2[partOfSpeech]}, {word2[definition]}\n3.) {word3[partOfSpeech]}, {word3[definition]}\n\n' + Fore.GREEN + 'Need a hint? Press "h" (It will cost 1 token)' + Fore.RESET, end = '')
+    while True:
+        quizOption = input('\nWhat is the answer? ')
+        while quizOption not in ['1', '2', '3', 'h']: quizOption = input(InvalidOption)
+
+        if quizOption == 'h':
+            supplies.tokens -= 1
+            print(f'Example: {vocabOptionList[ansNum][example]}')
+        elif int(quizOption) == ansNum + 1:
+            knowledgeGained = random.randint(50, 200)
+            print(Fore.GREEN + f'That was the right answer! Congrats! You earned ' + Fore.CYAN + f'{knowledgeGained}' + Fore.GREEN + ' knowledge!' + Fore.RESET)
+            break
+        else: 
+            print(Fore.RED + f'That was not the right answer! It was {vocabOptionList[ansNum][partOfSpeech]}, {vocabOptionList[ansNum][definition]}' + Fore.RESET)
+            break
+
 
 
 
@@ -421,29 +519,18 @@ def Menu(character, supplies, date):
         option = input('1.) Continue on the trail\n2.) Check supplies\n3.) Change pace\n4.) Change reading rate\n5.) Stop to rest\n6.) Attempt to trade\n7.) Read for knowledge\nWhat is your choice? ')
         while option not in ['1', '2', '3', '4', '5', '6', '7']: option = input(InvalidOption)
         match option:
-            case '1': break
+            case '1':
+                travel = input('\nHow many days would you like to travel? ')
+                DayTick(date, int(travel), True)
+
             case '2': 
                 dummyInput = input(Fore.YELLOW + '\nYour Supplies:' + Fore.RESET + f'\noxen: {supplies.oxen}\nsets of clothing: {supplies.clothing}\ntokens: {supplies.tokens}\nwagon wheels: {supplies.wheels}\nwagon axles: {supplies.axles}\nwagon tongues: {supplies.tongues}\npoints of knowledge: {supplies.knowledge}\nmoney left: ${supplies.money}0\n\n' + Fore.GREEN + '[Press Enter to continue]' + Fore.RESET)
+                
             case '3':
-                while True:
-                    paceOption = input(f'\nChange pace (currently "{character.pace}")\nThe pace at which you travel can change. Your choices are: \n1.) a steady pace\n2.) a strenuous pace\n3.) a grueling pace\n4.) find out what these different paces mean\nWhat is your choice? ')
-                    if paceOption == '4': 
-                        print('option 4')
-                        continue #wip
-                    while paceOption not in ['1', '2', '3']: paceOption = input(InvalidOption)
-                    break
-
-                if paceOption == '1': character.pace = 'steady'
-                elif paceOption == '2': character.pace = 'strenuous'
-                elif paceOption == '3': character.pace = 'grueling'
+                ChangePace(character)
 
             case '4':
-                readingRateOptions = input(f'\nChange reading rate (currently "{character.readingRate}")\nThe amount of knowledge the people in your party consume each day can change. These amounts are: \n1.) entertaining - reads many hours a day.\n2.) enjoyable - party reads a small but satisfactory amount.\n3.) disappointing - very few pages read; everyone stays craving for more.\nWhat is your choice? ')
-                while readingRateOptions not in ['1', '2', '3']: readingRateOptions = input(InvalidOption)
-
-                if readingRateOptions == '1': character.readingRate = 'entertaining'
-                elif readingRateOptions == '2': character.readingRate = 'satisfactory'
-                elif readingRateOptions == '3': character.readingRate = 'disappointing'
+                ChangeReadingRate(character)
 
             case '5':
                 rest = input('\nHow many days would you like to rest? ')
@@ -454,7 +541,7 @@ def Menu(character, supplies, date):
                 DayTick(date)
 
             case '7':
-                Quiz(supplies)
+                QuizOptions(supplies)
 
 
 
@@ -468,9 +555,6 @@ def main():
     character = Characters()
     supplies = Supplies()
     date = Date()
-
-
-
     
 
     MainMenu(character)
